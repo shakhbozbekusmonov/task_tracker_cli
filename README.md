@@ -1,4 +1,4 @@
-# Task List CLI
+# Task Tracker CLI
 
 A simple command-line interface (CLI) application for managing a task list. This CLI allows users to create, update, delete, and list tasks with various statuses (todo, in-progress, done).
 
