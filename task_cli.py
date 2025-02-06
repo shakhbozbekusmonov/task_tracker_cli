@@ -1,7 +1,8 @@
-import datetime
 import click
 import json
+from datetime import datetime
 from pathlib import Path
+from tabulate2 import tabulate
 
 
 TASK_FILE = Path("tasks.json")
@@ -27,6 +28,26 @@ def cli():
     pass
 
 
+def show_tasks(table):
+    DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
+
+    # Define headers for the table
+    headers = ["ID", "Description", "Status", "Created At", "Updated At"]
+
+    # Prepare the data for the table
+    formatted_table = []
+    for task in table:
+        formatted_table.append([
+            task["id"],
+            task["description"],
+            task["status"],
+            datetime.fromisoformat(task["createdAt"]).strftime(DATETIME_FORMAT),
+            datetime.fromisoformat(task["updatedAt"]).strftime(DATETIME_FORMAT)
+        ])
+
+    # Print the formatted table
+    print(tabulate(formatted_table, headers, tablefmt="rounded_grid"))
+
 @cli.command()
 @click.argument('task')
 def add(task):
@@ -37,12 +58,12 @@ def add(task):
             "id": len(tasks) + 1,
             "description": task,
             "status": "todo",
-            "createdAt": str(datetime.datetime.now()),
-            "updatedAt": str(datetime.datetime.now())
+            "createdAt": str(datetime.now()),
+            "updatedAt": str(datetime.now())
         }
         tasks.append(new_task)
         save_tasks(tasks)
-        click.echo(f"Task added successfully (ID: {len(tasks)})")
+        show_tasks(tasks)
     except Exception as e:
         click.echo(f"Error: {e}")
 
@@ -56,9 +77,9 @@ def update(task_id, description):
         for task in tasks:
             if task['id'] == task_id:
                 task['description'] = description
-                task["updatedAt"] = str(datetime.datetime.now())
+                task["updatedAt"] = str(datetime.now())
         save_tasks(tasks)
-        click.echo("Successfully updated task")
+        show_tasks(tasks)
     except IndexError:
         click.echo("Task not found")
 
@@ -79,7 +100,7 @@ def delete(task_id):
         if task_to_delete:
             tasks.remove(task_to_delete)
             save_tasks(tasks)
-            click.echo(f"Successfully deleted task {task_id}")
+            show_tasks(tasks)
         else:
             click.echo(f"Task with ID {task_id} not found.")
     except Exception as e:
@@ -95,9 +116,9 @@ def mark_in_progress(task_id):
         for task in tasks:
             if task['id'] == task_id:
                 task["status"] = "in-progress"
-                task["updatedAt"] = str(datetime.datetime.now())
+                task["updatedAt"] = str(datetime.now())
         save_tasks(tasks)
-        click.echo("Successfully marked task as in progress")
+        show_tasks(tasks)
     except IndexError:
         click.echo("Task not found")
 
@@ -110,9 +131,9 @@ def mark_done(task_id):
         for task in tasks:
             if task["id"] == task_id:
                 task["status"] = "done"
-                task["updatedAt"] = str(datetime.datetime.now())
+                task["updatedAt"] = str(datetime.now())
         save_tasks(tasks)
-        click.echo("Successfully marked task as done")
+        show_tasks(tasks)
     except IndexError:
         click.echo("Task not found")
 
@@ -129,8 +150,7 @@ def list(status):
         if not filtered_tasks:
             click.echo(f"'{status}' tasks not found")
         else:
-            for task in filtered_tasks:
-                click.echo(f"{task['id']}: {task['description']} [{task['status']}]")
+            show_tasks(tasks)
     except Exception as e:
         click.echo(f"Error: {e}")
 
