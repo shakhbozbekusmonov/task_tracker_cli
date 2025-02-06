@@ -2,6 +2,8 @@
 
 A simple command-line interface (CLI) application for managing a task list. This CLI allows users to create, update, delete, and list tasks with various statuses (todo, in-progress, done).
 
+Sample solution for the [task-tracker](https://roadmap.sh/projects/task-tracker) challenge from [roadmap.sh](https://roadmap.sh).
+
 Features
 - Add new tasks
 - Update task descriptions
@@ -16,7 +18,7 @@ Prerequisites
 Installation
 1. Clone the repository:
 ```
-git clone git@github.com:shakhbozbekusmonov/task_tracker_cli.git 
+git clone https://github.com/shakhbozbekusmonov/task_tracker_cli.git 
 cd task_tracker_cli
 ```
 
@@ -91,4 +93,4 @@ python task_cli.py delete 3
 
 Project Page
 
-Visit the project page at: https://github.com/shakhbozbekusmonov/task_tracker_cli.git
+Visit the project page at: https://github.com/shakhbozbekusmonov/task_tracker_cli
