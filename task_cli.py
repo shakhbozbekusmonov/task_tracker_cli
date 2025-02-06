@@ -150,7 +150,7 @@ def list(status):
         if not filtered_tasks:
             click.echo(f"'{status}' tasks not found")
         else:
-            show_tasks(tasks)
+            show_tasks(filtered_tasks)
     except Exception as e:
         click.echo(f"Error: {e}")
 
