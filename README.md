@@ -1,6 +1,7 @@
 # Task Tracker CLI
 
 A simple command-line interface (CLI) application for managing a task list. This CLI allows users to create, update, delete, and list tasks with various statuses (todo, in-progress, done).
+![image](/task_cli-show.png)
 
 Sample solution for the [task-tracker](https://roadmap.sh/projects/task-tracker) challenge from [roadmap.sh](https://roadmap.sh).
 
